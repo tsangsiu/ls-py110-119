@@ -6,7 +6,7 @@ HUMAN_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 
 def display_board(board):
-    os.system('cls')
+    os.system('clear')
 
     prompt(f'You are {HUMAN_MARKER}. Computer is {COMPUTER_MARKER}.')
     print('')
@@ -38,10 +38,21 @@ def board_full(board):
 def someone_won(board):
     return bool(detect_winner(board))
 
+def join_or(lst, delimitor=', ', word='or'):
+    if len(lst) == 0:
+        return ''
+    elif len(lst) == 1:
+        return str(lst[0])
+    elif len(lst) == 2:
+        return f'{lst[0]} {word} {lst[1]}'
+    else:
+        return f'{delimitor.join([str(ele) for ele in lst[:-1]])}' + \
+               f' {word} {lst[-1]}'
+
 def player_chooses_square(board):
     while True:
       valid_choices = [str(num) for num in empty_squares(board)]
-      prompt(f'Choose a square({', '.join(valid_choices)})')
+      prompt(f'Choose a square({join_or(valid_choices)}):')
       square = input().strip()
       if square in valid_choices:
           break
